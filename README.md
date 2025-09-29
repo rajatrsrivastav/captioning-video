@@ -6,16 +6,15 @@
 
 ### Essential Files Only
 ```
-captioning-video-1/
+captioning-video/
 ├── captioning-video-backend/
 │   ├── package.json              # Node.js dependencies
 │   ├── server.js                 # Express server (main)
-│   ├── requirements.txt          # Python dependencies
-│   ├── setup-python.sh          # Python environment setup
+│   ├── .env                      # Environment variables
 │   ├── routes/
 │   │   └── transcribe.routes.js  # Upload & transcription API
 │   └── src/utils/
-│       └── whisper.py           # Hinglish model script
+│       └── whisper.py           # Hinglish model script (uses system python3)
 │
 └── captioning-video-frontend/
     ├── package.json              # React + Remotion dependencies
@@ -35,19 +34,22 @@ captioning-video-1/
 # Install Node.js 18+, Python 3.8+, FFmpeg
 # macOS: brew install node python ffmpeg
 # Linux: sudo apt install nodejs python3 ffmpeg
+
+# Install Python packages globally
+pip3 install torch transformers librosa soundfile numpy accelerate datasets
 ```
 
 ### One-Time Setup
 ```bash
 # 1. Clone and navigate
 git clone https://github.com/rajatrsrivastav/captioning-video.git
-cd captioning-video-1
+cd captioning-video
 
-# 2. Backend (Python + Node.js)
+# 2. Backend setup
 cd captioning-video-backend
-./setup-python.sh && npm install
+npm install
 
-# 3. Frontend (React + Remotion)
+# 3. Frontend setup
 cd ../captioning-video-frontend  
 npm install
 ```
@@ -56,11 +58,11 @@ npm install
 ```bash
 # Terminal 1: Backend (port 4000)
 cd captioning-video-backend
-node server.js
+npm start
 
 # Terminal 2: Frontend (port 3000)
 cd captioning-video-frontend
-npm start
+npm run dev
 ```
 
 ## 🎬 Usage
@@ -98,22 +100,22 @@ Word Splitting → 2-3s Segments → WebVTT → Remotion Preview
 ### Quick Fixes
 ```bash
 # Backend won't start
-cd captioning-video-backend && node server.js
+cd captioning-video-backend && npm start
 
 # Python modules missing  
-cd captioning-video-backend && ./setup-python.sh
+pip3 install torch transformers librosa soundfile numpy accelerate datasets
 
 # Frontend build errors
 cd captioning-video-frontend && npm install
 
 # Test Hinglish model
-cd captioning-video-backend && source venv/bin/activate && python3 src/utils/whisper.py
+cd captioning-video-backend && python3 src/utils/whisper.py
 ```
 
 ### Common Issues
 ```bash
-# Python environment issues
-cd captioning-video-backend && ./setup-python.sh
+# Python packages missing
+pip3 install torch transformers librosa soundfile numpy accelerate datasets
 
 # Port already in use  
 lsof -ti:3000 | xargs kill -9  # Frontend
@@ -129,9 +131,7 @@ npm install  # In both frontend and backend folders
 curl http://localhost:4000
 
 # Test Hinglish model
-cd captioning-video-backend
-source venv/bin/activate  
-python3 src/utils/whisper.py
+cd captioning-video-backend && python3 src/utils/whisper.py
 ```
 
 ## 📦 Tech Stack
