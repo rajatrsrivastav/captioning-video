@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: captioning-video-backend
+    env: node
+    region: oregon
+    buildCommand: |
+      npm ci && 
+      chmod +x setup-python.sh && 
+      NODE_ENV=production ./setup-python.sh
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL_1
+        sync: false
+      - key: FRONTEND_URL_2
+        value: http://localhost:3000
+    disk:
+      name: captioning-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
