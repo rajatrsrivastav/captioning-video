@@ -1,6 +1,3 @@
 [submodule "captioning-video-frontend"]
 	path = captioning-video-frontend
 	url = https://github.com/rajatrsrivastav/captioning-video-frontend
-[submodule "captioning-video-backend/whisper.cpp"]
-	path = captioning-video-backend/whisper.cpp
-	url = https://github.com/ggml-org/whisper.cpp
