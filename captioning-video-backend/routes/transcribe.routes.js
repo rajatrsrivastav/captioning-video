@@ -23,7 +23,7 @@ transcribeRoute.post('/', upload.single('video'), async (req, res) => {
 
     const outputFile = `output_${timestamp}.json`;
     await new Promise((resolve, reject) => {
-      exec(`./venv/bin/python3 src/utils/whisper.py ${audioPath} --output ${outputFile}`, (error) => {
+      exec(`python3 src/utils/whisper.py ${audioPath} --output ${outputFile}`, (error) => {
         if (error) reject(error);
         else resolve();
       });
@@ -53,7 +53,7 @@ transcribeRoute.post('/', upload.single('video'), async (req, res) => {
     res.json({ 
       error: 'Transcription failed',
       details: error.message,
-      help: 'Make sure Python environment is set up: ./setup-python.sh'
+      help: 'Make sure Python3 is installed and required packages are available'
     });
   }
 });
