@@ -1,0 +1,17 @@
+node_modules/
+.env
+*.log
+temp_*
+audio_*
+video_*
+output_*
+
+# Whisper.cpp build files (but keep source)
+whisper.cpp/build/
+whisper.cpp/models/*.bin
+whisper.cpp/*.o
+whisper.cpp/*.so
+whisper.cpp/*.dylib
+
+# Keep whisper.cpp source but exclude large binaries
+!whisper.cpp/models/download-ggml-model.sh
