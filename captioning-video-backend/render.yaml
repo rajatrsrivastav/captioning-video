@@ -3,10 +3,7 @@ services:
     name: captioning-video-backend
     env: node
     region: oregon
-    buildCommand: |
-      npm ci && 
-      chmod +x setup-python.sh && 
-      NODE_ENV=production ./setup-python.sh
+    buildCommand: npm ci && chmod +x setup-python.sh && NODE_ENV=production ./setup-python.sh
     startCommand: npm start
     envVars:
       - key: NODE_ENV
