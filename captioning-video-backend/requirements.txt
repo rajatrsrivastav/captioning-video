@@ -1,17 +1,11 @@
 # Python dependencies for Hinglish Whisper model
-# Use CPU-only PyTorch for Render deployment to save memory
---index-url https://download.pytorch.org/whl/cpu
-torch==2.1.0+cpu
-torchvision==0.16.0+cpu
-torchaudio==2.1.0+cpu
-
-# Core ML libraries
+torch==2.1.0
+torchvision==0.16.0
+torchaudio==2.1.0
 transformers==4.35.0
 librosa==0.10.1
 soundfile==0.12.1
 numpy==1.24.4
-
-# Additional dependencies
 accelerate==0.24.1
 datasets==2.14.6
 tokenizers==0.15.0
