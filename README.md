@@ -72,7 +72,6 @@ npm run dev
 2. **Upload MP4** → Frontend automatically sends to backend
 3. **Auto-transcription** → Hinglish model processes audio
 4. **Preview captions** → Real-time preview in Remotion
-5. **Export video** → Final MP4 with embedded captions
 
 ### Key Features
 - **Hinglish Support**: Hindi-English mixed content
