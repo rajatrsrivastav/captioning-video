@@ -16,7 +16,7 @@ export const StudioUI = () => {
     formData.append('video', video);
     
     try {
-      const response = await fetch('http://localhost:4000/api/v1/transcribe', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/transcribe`, {
         method: 'POST',
         body: formData
       });
