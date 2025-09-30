@@ -18,7 +18,7 @@ def transcribe_hinglish(audio_path, model_name="Oriserve/Whisper-Hindi2Hinglish-
     """
     Transcribe audio using specialized Hindi to Hinglish Whisper model
     
-    Args:
+    Args: 
         audio_path (str): Path to audio file
         model_name (str): Hugging Face model identifier
     

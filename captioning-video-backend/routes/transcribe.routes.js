@@ -10,7 +10,7 @@ transcribeRoute.post('/', upload.single('video'), async (req, res) => {
   const timestamp = Date.now();
   const videoPath = `video_${timestamp}.mp4`;
   const audioPath = `audio_${timestamp}.wav`;
-
+ 
   try {
     fs.writeFileSync(videoPath, req.file.buffer);
 
@@ -27,7 +27,7 @@ transcribeRoute.post('/', upload.single('video'), async (req, res) => {
         if (error) reject(error);
         else resolve();
       });
-    });
+    }); 
 
     const result = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
     let vtt = 'WEBVTT\n\n';
@@ -39,7 +39,7 @@ transcribeRoute.post('/', upload.single('video'), async (req, res) => {
     });
 
     fs.unlinkSync(videoPath);
-    fs.unlinkSync(audioPath);
+    fs.unlinkSync(audioPath); 
     fs.unlinkSync(outputFile);
 
     res.json({ success: true, webvtt: vtt });

@@ -12,7 +12,7 @@ const allowedOrigin = [
     process.env.FRONTEND_URL_2
 ]
 app.use(
-    cors({
+    cors({ 
         origin:allowedOrigin,
         methods:["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
