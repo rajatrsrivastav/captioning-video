@@ -1,8 +1,8 @@
 import "./index.css";
 import { Composition } from "remotion";
-import { StudioUI } from "./StudioUI";
+import { VideoUploadToolbar } from "./toolbar";
 import { MyVideo } from "./MyVideo";
-import { VideoProvider, useVideo } from "./VideoContext";
+import { VideoProvider, useVideo } from "./videoContext";
 
 const DynamicVideo = () => {
   const { videoDuration } = useVideo();
@@ -21,7 +21,7 @@ const DynamicVideo = () => {
 export const RemotionRoot = () => {
   return (
     <VideoProvider>
-      <StudioUI />
+      <VideoUploadToolbar />
       <DynamicVideo />
     </VideoProvider>
   );

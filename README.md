@@ -22,9 +22,11 @@ captioning-video/
     └── src/
         ├── Root.jsx              # Main Remotion component
         ├── MyVideo.jsx           # Video composition
-        ├── StudioUI.jsx          # Upload interface
-        ├── CaptionOverlay.jsx    # Caption styling
-        └── VideoContext.jsx      # State management
+        ├── toolbar.jsx           # Upload interface (VideoUploadToolbar)
+        ├── videoCaption.jsx      # Caption styling component
+        ├── videoContext.jsx      # State management (VideoProvider)
+        └── utils/
+            └── vttParser.js      # WebVTT parsing (using webvtt-parser library)
 ```
 
 ## ⚡ Complete Setup
@@ -108,18 +110,38 @@ python3 -c "import torch, transformers, librosa; print('✓ All Python imports w
 
 ## ⚙️ Technical Details
 
+### Frontend Component Architecture
+```
+Root.jsx (RemotionRoot)
+├── VideoProvider (videoContext.jsx)
+│   ├── VideoUploadToolbar (toolbar.jsx)
+│   │   ├── File upload input
+│   │   ├── Generate captions button  
+│   │   └── Caption style selector
+│   └── DynamicVideo (Composition wrapper)
+│       └── MyVideo.jsx
+│           ├── Video component (Remotion)
+│           └── CaptionOverlay (videoCaption.jsx)
+│               ├── Frame-based timing
+│               ├── Active caption detection
+│               └── Style-based rendering
+```
+
 ### Caption Processing Flow
 ```
-MP4 Upload → FFmpeg Audio Extract → 8s Chunks → Hinglish Model → 
-Word Splitting → 2-3s Segments → WebVTT → Remotion Preview
+MP4 Upload (toolbar.jsx) → Backend API → FFmpeg Audio Extract → 8s Chunks → 
+Hinglish Model (whisper.py) → Word Splitting → 2-3s Segments → WebVTT → 
+Parse (webvtt-parser library in vttParser.js) → videoContext.jsx → videoCaption.jsx → Remotion Preview
 ```
 
 ### Key Files
 - `server.js` - Express server with upload handling
 - `routes/transcribe.routes.js` - API endpoint (25 lines only)
 - `src/utils/whisper.py` - Hinglish transcription script
-- `StudioUI.jsx` - Frontend upload interface
-- `CaptionOverlay.jsx` - Caption styling components
+- `toolbar.jsx` - Frontend upload interface (VideoUploadToolbar)
+- `videoCaption.jsx` - Caption styling component
+- `videoContext.jsx` - State management (VideoProvider, useVideo hook)
+- `utils/vttParser.js` - WebVTT parsing using webvtt-parser library
 
 ## 🔧 Troubleshooting
 
@@ -165,9 +187,10 @@ cd captioning-video-backend && python3 src/utils/whisper.py
 
 # Test frontend-backend connection
 # 1. Open browser: http://localhost:3000
-# 2. Upload an MP4 file
-# 3. Click "Generate Captions"
+# 2. Upload an MP4 file using VideoUploadToolbar
+# 3. Click "Generate Captions" button
 # 4. Check browser console - should show "Captions loaded: X"
+# 5. Captions should appear via CaptionOverlay component
 ```
 
 ### What You Should See
@@ -180,7 +203,7 @@ cd captioning-video-backend && python3 src/utils/whisper.py
 
 ## 📦 Tech Stack
 
-- **Frontend**: React 19 + Remotion 4.0 + Tailwind CSS
+- **Frontend**: React 19 + Remotion 4.0 + Tailwind CSS + webvtt-parser
 - **Backend**: Express.js + Multer + CORS  
 - **ML**: Python + PyTorch + Transformers + Librosa
 - **Model**: Oriserve/Whisper-Hindi2Hinglish-Swift

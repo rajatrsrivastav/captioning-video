@@ -1,5 +1,5 @@
 import { useCurrentFrame, useVideoConfig } from 'remotion';
-import { useVideo } from './VideoContext';
+import { useVideo } from './videoContext';
 
 export const CaptionOverlay = () => {
   const frame = useCurrentFrame();

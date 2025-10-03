@@ -8,7 +8,7 @@ dotenv.config();
 const app=express()
 const PORT=process.env.PORT
 const allowedOrigin = [
-    process.env.FRONTEND_URL_1,
+    process.env.FRONTEND_URL_1, 
     process.env.FRONTEND_URL_2
 ]
 app.use(

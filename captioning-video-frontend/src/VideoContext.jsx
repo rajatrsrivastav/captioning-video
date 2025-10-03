@@ -8,8 +8,7 @@ export const VideoProvider = ({ children }) => {
   const [videoUrl, setVideoUrl] = useState('');
   const [videoDuration, setVideoDuration] = useState(300);
   const [captions, setCaptions] = useState([]);
-  const [captionStyle, setCaptionStyle] = useState('bottom-center'); // 'bottom-center' | 'top-bar'
-  
+  const [captionStyle, setCaptionStyle] = useState('bottom-center');
   return (
     <VideoContext.Provider value={{ 
       videoUrl, setVideoUrl, 

@@ -1,28 +1,14 @@
+import { WebVTTParser } from 'webvtt-parser';
+
 export const parseWebVTT = (vttText) => {
-  const lines = vttText.split('\n');
-  const captions = [];
+  const parser = new WebVTTParser();
+  const tree = parser.parse(vttText);
   
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    
-    if (line.includes('-->')) {
-      const [startTime, endTime] = line.split(' --> ');
-      const text = lines[i + 1]?.trim();
-      
-      if (text) {
-        captions.push({
-          start: parseTime(startTime),
-          end: parseTime(endTime),
-          text: text
-        });
-      }
-    }
-  }
+  const captions = tree.cues.map(cue => ({
+    start: cue.startTime,
+    end: cue.endTime,
+    text: cue.text
+  }));
   
   return captions;
-};
-
-const parseTime = (timeStr) => {
-  const [hours, minutes, seconds] = timeStr.split(':');
-  return parseFloat(hours) * 3600 + parseFloat(minutes) * 60 + parseFloat(seconds);
 };

@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
-import './StudioUI.css';
-import { useVideo } from './VideoContext';
+import './toolbar.css';
+import { useVideo } from './videoContext';
 import { parseWebVTT } from './utils/vttParser';
 
-export const StudioUI = () => {
+export const VideoUploadToolbar = () => {
   const { setCaptions, setVideoUrl, setVideoDuration, captionStyle, setCaptionStyle } = useVideo();
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const handleVideoUpload = (e) => {
+    const file = e.target.files[0];
+    setVideo(file);
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setVideoUrl(url);
+      
+      const video = document.createElement('video');
+      video.src = url;
+      video.onloadedmetadata = () => {
+        setVideoDuration(Math.round(video.duration * 30));
+      };
+    }
+  };
 
   const generateCaptions = async () => {
     if (!video) return;
@@ -32,25 +47,14 @@ export const StudioUI = () => {
     }
     
     setLoading(false);
-  };  return (
+  };
+
+  return (
     <div className="toolbar">
       <input 
         type="file" 
         accept="video/mp4" 
-        onChange={(e) => {
-          const file = e.target.files[0];
-          setVideo(file);
-          if (file) {
-            const url = URL.createObjectURL(file);
-            setVideoUrl(url);
-            
-            const video = document.createElement('video');
-            video.src = url;
-            video.onloadedmetadata = () => {
-              setVideoDuration(Math.round(video.duration * 30));
-            };
-          }
-        }}
+        onChange={handleVideoUpload}
         className="file-input"
         id="video-upload"
       />

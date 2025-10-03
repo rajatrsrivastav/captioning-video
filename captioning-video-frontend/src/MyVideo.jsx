@@ -1,6 +1,6 @@
 import { AbsoluteFill, Video } from 'remotion';
-import { CaptionOverlay } from './CaptionOverlay';
-import { useVideo } from './VideoContext';
+import { CaptionOverlay } from './videoCaption';
+import { useVideo } from './videoContext';
 
 export const MyVideo = () => {
   const { videoUrl } = useVideo();
